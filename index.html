@@ -3,24 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Vision | Teachable Machine Pro</title>
+    <title>AI Vision | Offline Neural Pulse</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #8b5cf6;
-            --primary-glow: rgba(139, 92, 246, 0.5);
-            --secondary: #ec4899;
-            --bg: #030712;
-            --panel: rgba(17, 24, 39, 0.7);
-            --text: #f9fafb;
-            --text-dim: #9ca3af;
+            --primary: #c084fc;
+            --primary-glow: rgba(192, 132, 252, 0.4);
+            --secondary: #fb7185;
+            --bg: #020617;
+            --panel: rgba(15, 23, 42, 0.7);
+            --text: #f1f5f9;
+            --text-dim: #94a3b8;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Outfit', sans-serif;
@@ -34,164 +30,153 @@
             position: relative;
         }
 
-        /* Animated Background Orbs */
         .orb {
             position: fixed;
-            width: 600px;
-            height: 600px;
+            width: 700px;
+            height: 700px;
             border-radius: 50%;
-            filter: blur(120px);
+            filter: blur(140px);
             z-index: -1;
-            opacity: 0.3;
-            animation: move 20s infinite alternate;
+            opacity: 0.25;
+            animation: move 25s infinite alternate ease-in-out;
         }
 
         .orb-1 {
-            background: radial-gradient(circle, var(--primary) 0%, transparent 70%);
-            top: -200px;
-            left: -200px;
+            background: radial-gradient(circle, #4f46e5 0%, transparent 70%);
+            top: -20%;
+            left: -10%;
         }
 
         .orb-2 {
-            background: radial-gradient(circle, var(--secondary) 0%, transparent 70%);
-            bottom: -200px;
-            right: -200px;
-            animation-delay: -10s;
+            background: radial-gradient(circle, #be185d 0%, transparent 70%);
+            bottom: -20%;
+            right: -10%;
+            animation-delay: -12s;
         }
 
         @keyframes move {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(100px, 50px) scale(1.1); }
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(50px, 80px) rotate(15deg); }
         }
 
         .container {
             width: 95%;
-            max-width: 1100px;
+            max-width: 1150px;
             background: var(--panel);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 40px;
-            padding: 50px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            animation: fadeIn 0.8s ease-out;
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 48px;
+            padding: 60px;
+            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.7);
+            animation: slideUp 1s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        header {
-            text-align: center;
-            margin-bottom: 50px;
-        }
+        header { text-align: center; margin-bottom: 50px; }
 
         h1 {
-            font-size: 3.5rem;
+            font-size: 4rem;
             font-weight: 800;
-            letter-spacing: -0.05em;
-            background: linear-gradient(to right, #fff, #c4b5fd);
+            letter-spacing: -0.06em;
+            background: linear-gradient(135deg, #fff 30%, #a78bfa 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
-        header p {
-            color: var(--text-dim);
-            font-size: 1.2rem;
-            font-weight: 300;
-        }
+        header p { color: var(--text-dim); font-size: 1.25rem; }
 
-        .control-panel {
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 24px;
-            padding: 30px;
-            margin-bottom: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .input-group {
-            display: flex;
-            gap: 15px;
-        }
-
-        input {
-            flex: 1;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 14px;
-            padding: 18px 25px;
-            color: white;
-            font-family: inherit;
-            font-size: 1rem;
+        .upload-section {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 28px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 50px;
             transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
         }
 
-        input:focus {
-            outline: none;
+        .upload-section:hover {
             border-color: var(--primary);
-            background: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 0 0 4px var(--primary-glow);
+            background: rgba(192, 132, 252, 0.05);
         }
 
-        .start-btn {
-            background: linear-gradient(135deg, var(--primary), #7c3aed);
+        .upload-section.ready {
+            border-style: solid;
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.05);
+        }
+
+        #file-input {
+            position: absolute;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            cursor: pointer;
+        }
+
+        .upload-content h3 { font-size: 1.4rem; margin-bottom: 10px; }
+        .upload-content p { color: var(--text-dim); font-size: 0.95rem; }
+
+        .btn-start {
+            margin-top: 25px;
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
             color: white;
             border: none;
-            border-radius: 14px;
-            padding: 0 40px;
+            padding: 16px 45px;
+            border-radius: 16px;
             font-weight: 700;
             font-size: 1.1rem;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            transition: all 0.4s;
+            opacity: 0.5;
+            pointer-events: none;
+            box-shadow: 0 10px 25px -5px rgba(124, 58, 237, 0.4);
         }
 
-        .start-btn:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 15px 30px -5px var(--primary-glow);
+        .btn-start.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .btn-start.active:hover {
+            transform: translateY(-4px);
             filter: brightness(1.2);
-        }
-
-        .start-btn:active { transform: translateY(0) scale(0.98); }
-
-        .start-btn:disabled {
-            background: #4b5563;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
+            box-shadow: 0 15px 35px -5px rgba(124, 58, 237, 0.6);
         }
 
         .main-grid {
             display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 40px;
+            grid-template-columns: 1.3fr 0.7fr;
+            gap: 50px;
         }
 
-        @media (max-width: 950px) {
+        @media (max-width: 1000px) {
             .main-grid { grid-template-columns: 1fr; }
-            .container { padding: 30px; border-radius: 24px; }
-            h1 { font-size: 2.5rem; }
+            .container { padding: 30px; }
+            h1 { font-size: 3rem; }
         }
 
-        .viewer-box {
+        .vision-core {
             background: #000;
-            border-radius: 30px;
-            aspect-ratio: 16/10;
+            border-radius: 32px;
+            aspect-ratio: 16/9;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 5px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             position: relative;
-            box-shadow: inset 0 0 40px rgba(0,0,0,0.8);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
         #webcam-container canvas {
@@ -200,103 +185,91 @@
             object-fit: cover;
         }
 
-        .scan-line {
+        .stream-status {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: var(--primary);
-            box-shadow: 0 0 15px var(--primary);
-            z-index: 10;
-            display: none;
-            animation: scan 3s linear infinite;
-        }
-
-        @keyframes scan {
-            0% { top: 0%; opacity: 0; }
-            5% { opacity: 1; }
-            95% { opacity: 1; }
-            100% { top: 100%; opacity: 0; }
-        }
-
-        .empty-view {
-            color: var(--text-dim);
-            text-align: center;
+            top: 25px;
+            right: 25px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            gap: 20px;
+            gap: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
-        .empty-view svg { opacity: 0.3; animation: pulse 2s infinite; }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #ef4444;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ef4444;
         }
 
-        .results-panel {
+        .status-dot.active {
+            background: #22c55e;
+            box-shadow: 0 0 10px #22c55e;
+            animation: pulse 1s infinite alternate;
+        }
+
+        @keyframes pulse { to { transform: scale(1.3); opacity: 0.5; } }
+
+        .analysis-track {
             display: flex;
             flex-direction: column;
             gap: 15px;
         }
 
-        .prediction-card {
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 20px;
-            padding: 22px;
+        .track-item {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 24px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s;
         }
 
-        .prediction-card.active {
-            background: rgba(139, 92, 246, 0.1);
-            border-color: rgba(139, 92, 246, 0.4);
-            transform: scale(1.02);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        .track-item.high {
+            background: rgba(192, 132, 252, 0.08);
+            border-color: rgba(192, 132, 252, 0.3);
+            transform: translateX(10px);
         }
 
-        .card-progress {
+        .track-progress {
             position: absolute;
             bottom: 0;
             left: 0;
-            height: 5px;
+            height: 4px;
             background: linear-gradient(to right, var(--primary), var(--secondary));
-            width: var(--percentage, 0%);
-            transition: width 0.15s ease-out;
-            box-shadow: 0 0 15px var(--primary-glow);
+            width: var(--val, 0%);
+            transition: width 0.1s linear;
         }
 
-        .card-content {
+        .track-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: relative;
-            z-index: 2;
+            font-weight: 600;
+            font-size: 1.2rem;
         }
 
-        .class-label {
-            font-weight: 700;
-            font-size: 1.15rem;
-            letter-spacing: 0.5px;
-        }
-
-        .prob-value {
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: 900;
-            font-size: 1.25rem;
+        .track-val {
             color: var(--primary);
+            font-family: monospace;
+            font-size: 1.4rem;
         }
 
-        .footer-note {
-            margin-top: 30px;
-            text-align: center;
-            font-size: 0.85rem;
+        .instructions {
+            margin-top: 40px;
+            font-size: 0.9rem;
             color: var(--text-dim);
+            text-align: center;
         }
     </style>
 </head>
@@ -306,70 +279,93 @@
 
     <div class="container">
         <header>
-            <h1>Neural Pulse</h1>
-            <p>Advanced Real-time Computer Vision</p>
+            <h1>Pulse Local AI</h1>
+            <p>Direct Browser Interface • No External Cloud Required</p>
         </header>
 
-        <section class="control-panel">
-            <p style="font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--primary);">Model Source Configuration</p>
-            <div class="input-group">
-                <input type="text" id="model-url" placeholder="Enter remote URL or local path (e.g., ./my_model/)" value="./my_model/">
-                <button class="start-btn" id="init-btn" onclick="init()">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                    Initialize Matrix
-                </button>
+        <section class="upload-section" id="drop-zone">
+            <input type="file" id="file-input" multiple>
+            <div class="upload-content">
+                <div id="upload-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h3 id="upload-status">Upload Neural Package</h3>
+                <p id="upload-details">Select your model.json, metadata.json, and weights.bin files</p>
+                <button class="btn-start" id="start-btn">ENGAGE NEURAL CORE</button>
             </div>
         </section>
 
         <div class="main-grid">
-            <div class="viewer-box">
-                <div class="scan-line" id="scanner"></div>
+            <div class="vision-core">
+                <div class="stream-status">
+                    <div class="status-dot" id="dot"></div>
+                    <span id="label-status">OFFLINE</span>
+                </div>
                 <div id="webcam-container">
-                    <div class="empty-view">
-                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-                            <path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        <p>Awaiting Uplink Initialization...</p>
+                    <div style="opacity: 0.2;">
+                         <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                         </svg>
                     </div>
                 </div>
             </div>
 
-            <div class="results-panel" id="label-container">
+            <div class="analysis-track" id="label-container">
                 <!-- Predictive data streams here -->
             </div>
         </div>
 
-        <p class="footer-note">Powered by TensorFlow.js & Google Teachable Machine</p>
+        <p class="instructions">Tip: You can export your model from Teachable Machine as 'Download Files' to get the local dataset.</p>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
     <script>
+        const fileInput = document.getElementById('file-input');
+        const startBtn = document.getElementById('start-btn');
+        const uploadStatus = document.getElementById('upload-status');
+        const uploadDetails = document.getElementById('upload-details');
+        const dropZone = document.getElementById('drop-zone');
+        
         let model, webcam, labelContainer, maxPredictions;
+        let files = {};
+
+        fileInput.addEventListener('change', (e) => {
+            const selectedFiles = e.target.files;
+            for (let file of selectedFiles) {
+                if (file.name.endsWith('.json') && file.name.includes('metadata')) {
+                    files.metadata = file;
+                } else if (file.name.endsWith('.json')) {
+                    files.model = file;
+                } else if (file.name.endsWith('.bin')) {
+                    files.weights = file;
+                }
+            }
+
+            if (files.model && files.metadata && files.weights) {
+                uploadStatus.innerText = "Neural Package Synced";
+                uploadDetails.innerText = "All three core modules detected and ready.";
+                dropZone.classList.add('ready');
+                startBtn.classList.add('active');
+            } else {
+                uploadStatus.innerText = "Incomplete Package";
+                uploadDetails.innerText = "Make sure to include model.json, metadata.json, and weights.bin";
+            }
+        });
+
+        startBtn.addEventListener('click', init);
 
         async function init() {
-            const btn = document.getElementById('init-btn');
-            let URL = document.getElementById('model-url').value.trim();
-            
-            if (!URL) {
-                alert("Please specify a model path or URL.");
-                return;
-            }
-            
-            if (!URL.endsWith('/')) URL += '/';
-
             try {
-                btn.disabled = true;
-                btn.innerHTML = "Syncing Neural Network...";
-                
-                const modelURL = URL + "model.json";
-                const metadataURL = URL + "metadata.json";
+                startBtn.innerText = "Calibrating Neural Net...";
+                startBtn.classList.remove('active');
 
-                // Load the model
-                model = await tmImage.load(modelURL, metadataURL);
+                // Using the specific API to load from locally selected files
+                model = await tmImage.loadFromFiles(files.model, files.weights, files.metadata);
                 maxPredictions = model.getTotalClasses();
 
-                // Setup Webcam
                 const flip = true;
                 webcam = new tmImage.Webcam(400, 400, flip);
                 await webcam.setup();
@@ -377,32 +373,33 @@
                 
                 window.requestAnimationFrame(loop);
 
-                // Update UI
-                document.getElementById("webcam-container").innerHTML = "";
-                document.getElementById("webcam-container").appendChild(webcam.canvas);
-                document.getElementById("scanner").style.display = "block";
+                // UI Transitions
+                document.getElementById('dot').classList.add('active');
+                document.getElementById('label-status').innerText = "STREAM LIVE";
+                document.getElementById('webcam-container').innerHTML = "";
+                document.getElementById('webcam-container').appendChild(webcam.canvas);
                 
-                labelContainer = document.getElementById("label-container");
+                labelContainer = document.getElementById('label-container');
                 labelContainer.innerHTML = "";
                 for (let i = 0; i < maxPredictions; i++) {
-                    const card = document.createElement("div");
-                    card.className = "prediction-card";
-                    card.innerHTML = `
-                        <div class="card-content">
-                            <span class="class-label">Analyzing...</span>
-                            <span class="prob-value">0%</span>
+                    const div = document.createElement("div");
+                    div.className = "track-item";
+                    div.innerHTML = `
+                        <div class="track-header">
+                            <span>Initializing...</span>
+                            <span class="track-val">0%</span>
                         </div>
-                        <div class="card-progress"></div>
+                        <div class="track-progress"></div>
                     `;
-                    labelContainer.appendChild(card);
+                    labelContainer.appendChild(div);
                 }
-                
-                btn.innerHTML = "Matrix Linked";
-            } catch (e) {
-                console.error(e);
-                alert("Initialization Failed: Could not find model files at the specified location. Ensure your 'my_model' folder contains model.json and metadata.json.");
-                btn.disabled = false;
-                btn.innerHTML = 'Initialize Matrix';
+
+                dropZone.style.display = "none";
+            } catch (error) {
+                console.error(error);
+                alert("Core Link Failed: Check file integrity.");
+                startBtn.classList.add('active');
+                startBtn.innerText = "ENGAGE NEURAL CORE";
             }
         }
 
@@ -415,19 +412,18 @@
         async function predict() {
             const prediction = await model.predict(webcam.canvas);
             for (let i = 0; i < maxPredictions; i++) {
-                const card = labelContainer.childNodes[i];
-                const probability = prediction[i].probability;
-                const percentage = (probability * 100).toFixed(0);
+                const item = labelContainer.childNodes[i];
+                const prob = prediction[i].probability;
+                const perc = (prob * 100).toFixed(0);
                 
-                card.querySelector(".class-label").innerText = prediction[i].className;
-                card.querySelector(".prob-value").innerText = percentage + "%";
-                card.style.setProperty('--percentage', percentage + "%");
+                item.querySelector('span:first-child').innerText = prediction[i].className;
+                item.querySelector('.track-val').innerText = perc + "%";
+                item.style.setProperty('--val', perc + "%");
                 
-                // Visual feedback for high confidence
-                if (probability > 0.85) {
-                    card.classList.add('active');
+                if (prob > 0.85) {
+                    item.classList.add('high');
                 } else {
-                    card.classList.remove('active');
+                    item.classList.remove('high');
                 }
             }
         }
