@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Vision | Offline Neural Pulse</title>
+    <title>AI Vision | Frog vs Mouse</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -14,6 +14,8 @@
             --panel: rgba(15, 23, 42, 0.7);
             --text: #f1f5f9;
             --text-dim: #94a3b8;
+            --frog-green: #4ade80;
+            --mouse-gray: #94a3b8;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -28,6 +30,7 @@
             justify-content: center;
             overflow-x: hidden;
             position: relative;
+            transition: background 0.5s;
         }
 
         .orb {
@@ -39,238 +42,147 @@
             z-index: -1;
             opacity: 0.25;
             animation: move 25s infinite alternate ease-in-out;
+            transition: all 1s;
         }
 
         .orb-1 {
             background: radial-gradient(circle, #4f46e5 0%, transparent 70%);
-            top: -20%;
-            left: -10%;
+            top: -20%; left: -10%;
         }
 
         .orb-2 {
             background: radial-gradient(circle, #be185d 0%, transparent 70%);
-            bottom: -20%;
-            right: -10%;
-            animation-delay: -12s;
-        }
-
-        @keyframes move {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            100% { transform: translate(50px, 80px) rotate(15deg); }
+            bottom: -20%; right: -10%;
         }
 
         .container {
             width: 95%;
-            max-width: 1150px;
+            max-width: 1100px;
             background: var(--panel);
             backdrop-filter: blur(30px);
             -webkit-backdrop-filter: blur(30px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 48px;
-            padding: 60px;
+            border-radius: 40px;
+            padding: 50px;
             box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.7);
-            animation: slideUp 1s cubic-bezier(0.2, 0.8, 0.2, 1);
+            animation: slideUp 0.8s ease-out;
         }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        header { text-align: center; margin-bottom: 50px; }
-
+        header { text-align: center; margin-bottom: 40px; }
+        
         h1 {
-            font-size: 4rem;
+            font-size: 3.5rem;
             font-weight: 800;
             letter-spacing: -0.06em;
-            background: linear-gradient(135deg, #fff 30%, #a78bfa 100%);
+            background: linear-gradient(135deg, #fff 40%, #a78bfa 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 8px;
         }
 
-        header p { color: var(--text-dim); font-size: 1.25rem; }
+        /* Detection Spotlight */
+        #detection-spotlight {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s;
+        }
+
+        #detection-text {
+            font-size: 2.2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+        }
 
         .upload-section {
             background: rgba(0, 0, 0, 0.3);
             border: 2px dashed rgba(255, 255, 255, 0.1);
-            border-radius: 28px;
+            border-radius: 24px;
             padding: 40px;
             text-align: center;
-            margin-bottom: 50px;
-            transition: all 0.3s;
+            margin-bottom: 30px;
             cursor: pointer;
             position: relative;
         }
 
-        .upload-section:hover {
-            border-color: var(--primary);
-            background: rgba(192, 132, 252, 0.05);
-        }
-
-        .upload-section.ready {
-            border-style: solid;
-            border-color: #22c55e;
-            background: rgba(34, 197, 94, 0.05);
-        }
-
-        #file-input {
-            position: absolute;
-            opacity: 0;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            cursor: pointer;
-        }
-
-        .upload-content h3 { font-size: 1.4rem; margin-bottom: 10px; }
-        .upload-content p { color: var(--text-dim); font-size: 0.95rem; }
+        #file-input { position: absolute; opacity: 0; width: 100%; height: 100%; top: 0; left: 0; cursor: pointer; }
 
         .btn-start {
-            margin-top: 25px;
-            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
-            color: white;
-            border: none;
-            padding: 16px 45px;
-            border-radius: 16px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.4s;
-            opacity: 0.5;
-            pointer-events: none;
-            box-shadow: 0 10px 25px -5px rgba(124, 58, 237, 0.4);
+            margin-top: 20px;
+            background: var(--primary);
+            color: white; border: none; padding: 15px 40px; border-radius: 12px;
+            font-weight: 700; cursor: pointer; opacity: 0.5; pointer-events: none;
         }
 
-        .btn-start.active {
-            opacity: 1;
-            pointer-events: all;
-        }
+        .btn-start.active { opacity: 1; pointer-events: all; }
 
-        .btn-start.active:hover {
-            transform: translateY(-4px);
-            filter: brightness(1.2);
-            box-shadow: 0 15px 35px -5px rgba(124, 58, 237, 0.6);
-        }
-
-        .main-grid {
+        .main-view {
             display: grid;
-            grid-template-columns: 1.3fr 0.7fr;
-            gap: 50px;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 40px;
         }
 
-        @media (max-width: 1000px) {
-            .main-grid { grid-template-columns: 1fr; }
-            .container { padding: 30px; }
-            h1 { font-size: 3rem; }
-        }
+        @media (max-width: 900px) { .main-view { grid-template-columns: 1fr; } }
 
-        .vision-core {
+        .camera-box {
             background: #000;
-            border-radius: 32px;
-            aspect-ratio: 16/9;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            position: relative;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-        }
-
-        #webcam-container canvas {
-            width: 100% !important;
-            height: 100% !important;
-            object-fit: cover;
-        }
-
-        .stream-status {
-            position: absolute;
-            top: 25px;
-            right: 25px;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(8px);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background: #ef4444;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #ef4444;
-        }
-
-        .status-dot.active {
-            background: #22c55e;
-            box-shadow: 0 0 10px #22c55e;
-            animation: pulse 1s infinite alternate;
-        }
-
-        @keyframes pulse { to { transform: scale(1.3); opacity: 0.5; } }
-
-        .analysis-track {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .track-item {
-            background: rgba(255, 255, 255, 0.03);
             border-radius: 24px;
-            padding: 25px;
+            aspect-ratio: 1;
+            overflow: hidden;
+            position: relative;
+            border: 4px solid rgba(255, 255, 255, 0.05);
+        }
+
+        #webcam-container canvas { width: 100% !important; height: 100% !important; object-fit: cover; }
+
+        .hud-overlay {
+            position: absolute;
+            top: 20px; left: 20px;
+            background: rgba(0,0,0,0.6);
+            padding: 5px 15px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: #fff;
+        }
+
+        .classes-list { display: flex; flex-direction: column; gap: 12px; }
+
+        .class-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 20px;
             border: 1px solid rgba(255, 255, 255, 0.05);
             position: relative;
             overflow: hidden;
-            transition: all 0.4s;
         }
 
-        .track-item.high {
-            background: rgba(192, 132, 252, 0.08);
-            border-color: rgba(192, 132, 252, 0.3);
-            transform: translateX(10px);
-        }
-
-        .track-progress {
+        .progress-fill {
             position: absolute;
-            bottom: 0;
-            left: 0;
-            height: 4px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            width: var(--val, 0%);
-            transition: width 0.1s linear;
+            bottom: 0; left: 0; height: 4px;
+            background: var(--primary);
+            width: var(--p, 0%);
+            transition: width 0.1s;
         }
 
-        .track-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-            font-size: 1.2rem;
-        }
+        .label-wrap { display: flex; justify-content: space-between; align-items: center; }
+        .label-name { font-weight: 600; font-size: 1.1rem; }
+        .label-perc { font-family: monospace; font-weight: 800; color: var(--primary); }
 
-        .track-val {
-            color: var(--primary);
-            font-family: monospace;
-            font-size: 1.4rem;
-        }
+        /* Dynamic Themes */
+        .theme-frog #detection-spotlight { border-color: var(--frog-green); background: rgba(74, 222, 128, 0.1); }
+        .theme-frog #detection-text { color: var(--frog-green); }
+        .theme-frog .orb-1 { background: radial-gradient(circle, var(--frog-green) 0%, transparent 70%); }
 
-        .instructions {
-            margin-top: 40px;
-            font-size: 0.9rem;
-            color: var(--text-dim);
-            text-align: center;
-        }
+        .theme-mouse #detection-spotlight { border-color: #fff; background: rgba(255, 255, 255, 0.1); }
+        .theme-mouse #detection-text { color: #fff; text-shadow: 0 0 15px #fff; }
+        .theme-mouse .orb-2 { background: radial-gradient(circle, #fff 0%, transparent 70%); }
     </style>
 </head>
 <body>
@@ -279,45 +191,33 @@
 
     <div class="container">
         <header>
-            <h1>Pulse Local AI</h1>
-            <p>Direct Browser Interface • No External Cloud Required</p>
+            <h1>Specimen Analysis</h1>
+            <p>Frog & Mouse Detection Protocol</p>
         </header>
+
+        <div id="detection-spotlight">
+            <span id="detection-text">Awaiting Input...</span>
+        </div>
 
         <section class="upload-section" id="drop-zone">
             <input type="file" id="file-input" multiple>
             <div class="upload-content">
-                <div id="upload-icon">
-                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2">
-                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-                <h3 id="upload-status">Upload Neural Package</h3>
-                <p id="upload-details">Select your model.json, metadata.json, and weights.bin files</p>
-                <button class="btn-start" id="start-btn">ENGAGE NEURAL CORE</button>
+                <h3>Load Local Model</h3>
+                <p>Select model.json, metadata.json, and weights.bin</p>
+                <button class="btn-start" id="start-btn">INITIALIZE AI</button>
             </div>
         </section>
 
-        <div class="main-grid">
-            <div class="vision-core">
-                <div class="stream-status">
-                    <div class="status-dot" id="dot"></div>
-                    <span id="label-status">OFFLINE</span>
-                </div>
-                <div id="webcam-container">
-                    <div style="opacity: 0.2;">
-                         <svg width="80" height="80" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                         </svg>
-                    </div>
-                </div>
+        <div class="main-view">
+            <div class="camera-box">
+                <div class="hud-overlay">LIVE NEURAL FEED</div>
+                <div id="webcam-container"></div>
             </div>
 
-            <div class="analysis-track" id="label-container">
-                <!-- Predictive data streams here -->
+            <div class="classes-list" id="label-container">
+                <!-- Predictive data -->
             </div>
         </div>
-
-        <p class="instructions">Tip: You can export your model from Teachable Machine as 'Download Files' to get the local dataset.</p>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
@@ -325,81 +225,45 @@
     <script>
         const fileInput = document.getElementById('file-input');
         const startBtn = document.getElementById('start-btn');
-        const uploadStatus = document.getElementById('upload-status');
-        const uploadDetails = document.getElementById('upload-details');
         const dropZone = document.getElementById('drop-zone');
+        const detectionText = document.getElementById('detection-text');
         
         let model, webcam, labelContainer, maxPredictions;
         let files = {};
 
         fileInput.addEventListener('change', (e) => {
-            const selectedFiles = e.target.files;
-            for (let file of selectedFiles) {
-                if (file.name.endsWith('.json') && file.name.includes('metadata')) {
-                    files.metadata = file;
-                } else if (file.name.endsWith('.json')) {
-                    files.model = file;
-                } else if (file.name.endsWith('.bin')) {
-                    files.weights = file;
-                }
+            for (let file of e.target.files) {
+                if (file.name.includes('metadata')) files.metadata = file;
+                else if (file.name.endsWith('.json')) files.model = file;
+                else if (file.name.endsWith('.bin')) files.weights = file;
             }
-
             if (files.model && files.metadata && files.weights) {
-                uploadStatus.innerText = "Neural Package Synced";
-                uploadDetails.innerText = "All three core modules detected and ready.";
-                dropZone.classList.add('ready');
                 startBtn.classList.add('active');
-            } else {
-                uploadStatus.innerText = "Incomplete Package";
-                uploadDetails.innerText = "Make sure to include model.json, metadata.json, and weights.bin";
+                detectionText.innerText = "Package Ready";
             }
         });
 
         startBtn.addEventListener('click', init);
 
         async function init() {
-            try {
-                startBtn.innerText = "Calibrating Neural Net...";
-                startBtn.classList.remove('active');
+            model = await tmImage.loadFromFiles(files.model, files.weights, files.metadata);
+            maxPredictions = model.getTotalClasses();
 
-                // Using the specific API to load from locally selected files
-                model = await tmImage.loadFromFiles(files.model, files.weights, files.metadata);
-                maxPredictions = model.getTotalClasses();
+            webcam = new tmImage.Webcam(400, 400, true);
+            await webcam.setup();
+            await webcam.play();
+            
+            window.requestAnimationFrame(loop);
 
-                const flip = true;
-                webcam = new tmImage.Webcam(400, 400, flip);
-                await webcam.setup();
-                await webcam.play();
-                
-                window.requestAnimationFrame(loop);
-
-                // UI Transitions
-                document.getElementById('dot').classList.add('active');
-                document.getElementById('label-status').innerText = "STREAM LIVE";
-                document.getElementById('webcam-container').innerHTML = "";
-                document.getElementById('webcam-container').appendChild(webcam.canvas);
-                
-                labelContainer = document.getElementById('label-container');
-                labelContainer.innerHTML = "";
-                for (let i = 0; i < maxPredictions; i++) {
-                    const div = document.createElement("div");
-                    div.className = "track-item";
-                    div.innerHTML = `
-                        <div class="track-header">
-                            <span>Initializing...</span>
-                            <span class="track-val">0%</span>
-                        </div>
-                        <div class="track-progress"></div>
-                    `;
-                    labelContainer.appendChild(div);
-                }
-
-                dropZone.style.display = "none";
-            } catch (error) {
-                console.error(error);
-                alert("Core Link Failed: Check file integrity.");
-                startBtn.classList.add('active');
-                startBtn.innerText = "ENGAGE NEURAL CORE";
+            dropZone.style.display = "none";
+            
+            labelContainer = document.getElementById('label-container');
+            labelContainer.innerHTML = "";
+            for (let i = 0; i < maxPredictions; i++) {
+                const div = document.createElement("div");
+                div.className = "class-card";
+                div.innerHTML = `<div class="label-wrap"><span class="label-name">...</span><span class="label-perc">0%</span></div><div class="progress-fill"></div>`;
+                labelContainer.appendChild(div);
             }
         }
 
@@ -411,20 +275,36 @@
 
         async function predict() {
             const prediction = await model.predict(webcam.canvas);
+            let topClass = "";
+            let topProb = 0;
+
             for (let i = 0; i < maxPredictions; i++) {
-                const item = labelContainer.childNodes[i];
                 const prob = prediction[i].probability;
-                const perc = (prob * 100).toFixed(0);
+                const className = prediction[i].className;
+                const item = labelContainer.childNodes[i];
                 
-                item.querySelector('span:first-child').innerText = prediction[i].className;
-                item.querySelector('.track-val').innerText = perc + "%";
-                item.style.setProperty('--val', perc + "%");
-                
-                if (prob > 0.85) {
-                    item.classList.add('high');
-                } else {
-                    item.classList.remove('high');
+                item.querySelector('.label-name').innerText = className;
+                item.querySelector('.label-perc').innerText = (prob * 100).toFixed(0) + "%";
+                item.style.setProperty('--p', (prob * 100).toFixed(0) + "%");
+
+                if (prob > topProb) {
+                    topProb = prob;
+                    topClass = className;
                 }
+            }
+
+            // Update Spotlight if confidence is high enough
+            if (topProb > 0.6) {
+                detectionText.innerText = "Detected: " + topClass;
+                
+                // Trigger Visual Effects based on class name
+                const lowerClass = topClass.toLowerCase();
+                document.body.className = ""; // reset
+                if (lowerClass.includes("frog")) document.body.classList.add("theme-frog");
+                else if (lowerClass.includes("mouse")) document.body.classList.add("theme-mouse");
+            } else {
+                detectionText.innerText = "Analyzing...";
+                document.body.className = "";
             }
         }
     </script>
