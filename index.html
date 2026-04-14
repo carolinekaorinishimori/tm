@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Vision | Teachable Machine</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-elements">
+        <div class="blob shape1"></div>
+        <div class="blob shape2"></div>
+    </div>
+
+    <main class="app-container">
+        <header>
+            <h1>AI Vision Explorer</h1>
+            <p>Powered by Google Teachable Machine</p>
+        </header>
+
+        <section class="config-section">
+            <label for="model-url">Teachable Machine Model URL:</label>
+            <div class="input-group">
+                <input type="text" id="model-url" placeholder="https://teachablemachine.withgoogle.com/models/YOUR_MODEL_ID/" value=""> 
+            </div>
+            <button id="start-btn" type="button">Initialize Camera & Model</button>
+        </section>
+
+        <section class="vision-section">
+            <div class="webcam-wrapper">
+                <div id="webcam-container">
+                    <div class="placeholder-text">Camera feed will appear here</div>
+                </div>
+            </div>
+            
+            <div class="results-wrapper">
+                <h2>Predictions</h2>
+                <div id="label-container" class="labels">
+                    <div class="empty-state">Waiting for model...</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
